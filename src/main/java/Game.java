@@ -18,7 +18,9 @@ public class Game {
                     introduirName();
                     break;
                 case 2:
-
+                    Penjat penjat = new Penjat(name);
+                    penjat.inici();
+                    break;
                 case 5:
                     System.out.println("Bye");
                     break;
