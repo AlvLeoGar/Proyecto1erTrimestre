@@ -1,5 +1,5 @@
 public class Paraula {
-    private char [] knowChar = new char[24];
+    private char [] knowChar = new char[25];
 
     private String paraula = selectParaula();
 
@@ -41,5 +41,13 @@ public class Paraula {
             System.out.print("_ ");
         }
         System.out.println("");
+    }
+    public void introuirParaula() {
+        int i = 0;
+        String letraUsuario = Game.teclado.next();
+        do{
+            i++;
+        }while(knowChar[i] != 0);
+        knowChar[i] = letraUsuario.charAt(0);
     }
 }

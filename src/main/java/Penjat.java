@@ -1,7 +1,6 @@
-import java.util.Scanner;
+
 
 public class Penjat {
-    Scanner teclado = new Scanner(System.in);
     private String name;
     private int tries;
     private Paraula paraula = new Paraula();
@@ -14,7 +13,7 @@ public class Penjat {
             System.out.println(" [1] Iniciar el joc");
             System.out.println(" [2] Mostrar normes");
             System.out.println(" [3] Eixir");
-            respuetaUsuario = teclado.nextInt();
+            respuetaUsuario = Game.teclado.nextInt();
             switch(respuetaUsuario){
                 case 1:
                     penjatStart();
@@ -32,7 +31,7 @@ public class Penjat {
     public void penjatStart(){
         System.out.println("Selecciona el nivell de dificultat (1 - 3)");
         do {
-            respuetaUsuario = teclado.nextInt();
+            respuetaUsuario = Game.teclado.nextInt();
             if (respuetaUsuario == 1) {
                 System.out.println("Dificultat seleccionada: Fàcil");
                 tries = 9;
@@ -46,7 +45,21 @@ public class Penjat {
                 System.out.println("Dime un nombre entre 1 i 3");
             }
         } while (respuetaUsuario > 3);
+        do{
             paraula.mostrarParaula();
+            System.out.println("Tria una opció: ");
+            System.out.print(" [1] Posar una lletra");
+            System.out.print(" [2] Pista");
+            System.out.print(" [3] Intentar resoldre");
+            System.out.print(" [4] Rendir-se");
+            respuetaUsuario = Game.teclado.nextInt();
+            switch (respuetaUsuario){
+                case 1: paraula.introuirParaula(); break;
+                case 4: System.out.println("xD"); break;
+                default: System.out.println("xD"); break;
+            }
+            }while(respuetaUsuario != 4);
+
         }
 
 }
