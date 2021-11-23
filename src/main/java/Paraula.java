@@ -4,6 +4,9 @@ public class Paraula {
     private String paraula = selectParaula();
 
     public String selectParaula(){
+        for(int i = 0; i < 24; i++){
+            knowChar[i] = 0;
+        }
         int seleccionador = (int) (Math.random() * 14);
         return switch (seleccionador) {
             case 0 -> "Puntuació";
@@ -32,10 +35,12 @@ public class Paraula {
     }
     public void mostrarParaula() {
         System.out.println("");
+
         for (int i = 0; i < paraula.length(); i++) {
             for (int j = 0; j < knowChar.length; j++) {
                 if (knowChar[j] == partirParaula(paraula)[i] || Character.toUpperCase(knowChar[j]) == partirParaula(paraula)[i]) {
                     System.out.print(partirParaula(paraula)[i] + " ");
+                    i++;
                 }
             }
             System.out.print("_ ");
@@ -43,11 +48,15 @@ public class Paraula {
         System.out.println("");
     }
     public void introuirParaula() {
+        System.out.println("Introdueix la paraula");
         int i = 0;
-        String letraUsuario = Game.teclado.next();
-        do{
-            i++;
-        }while(knowChar[i] != 0);
-        knowChar[i] = letraUsuario.charAt(0);
+
+    }
+    public void lletraPista(){
+        for(int i = 0; i < knowChar.length; i++){
+            if(knowChar[i] != 0){
+                knowChar[i] = 'e';
+            }
+        }
     }
 }

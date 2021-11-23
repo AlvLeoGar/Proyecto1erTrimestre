@@ -1,4 +1,5 @@
 import java.util.Scanner;
+
 public class Game {
 
     static Scanner teclado = new Scanner(System.in);

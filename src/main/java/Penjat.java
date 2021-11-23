@@ -1,5 +1,3 @@
-
-
 public class Penjat {
     private String name;
     private int tries;
@@ -48,17 +46,15 @@ public class Penjat {
         do{
             paraula.mostrarParaula();
             System.out.println("Tria una opció: ");
-            System.out.print(" [1] Posar una lletra");
-            System.out.print(" [2] Pista");
-            System.out.print(" [3] Intentar resoldre");
-            System.out.print(" [4] Rendir-se");
+            System.out.print(" [1] Intentar resoldre");
+            System.out.print(" [2] Rendir-se");
             respuetaUsuario = Game.teclado.nextInt();
             switch (respuetaUsuario){
-                case 1: paraula.introuirParaula(); break;
-                case 4: System.out.println("xD"); break;
+                case 1: paraula.lletraPista(); break;
+                case 2: System.out.println("xD"); break;
                 default: System.out.println("xD"); break;
             }
-            }while(respuetaUsuario != 4);
+            }while(respuetaUsuario != 2);
 
         }
 
