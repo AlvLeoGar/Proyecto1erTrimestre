@@ -4,6 +4,7 @@ public class Penjat {
     Scanner teclado = new Scanner(System.in);
     private String name;
     private int tries;
+    private Paraula paraula = new Paraula();
     public Penjat(String name){
         this.name = name;
     }
@@ -45,26 +46,7 @@ public class Penjat {
                 System.out.println("Dime un nombre entre 1 i 3");
             }
         } while (respuetaUsuario > 3);
-        System.out.println(selectParaula());
-    }
-    public String selectParaula(){
-        int seleccionador = (int) (Math.random() * 14);
-        return switch (seleccionador) {
-            case 0 -> "Puntuació";
-            case 1 -> "Variable";
-            case 2 -> "Gol";
-            case 3 -> "Nivel";
-            case 4 -> "Objecte";
-            case 5 -> "Porter";
-            case 6 -> "Mundo";
-            case 7 -> "HolaMundo";
-            case 8 -> "Delanter";
-            case 9 -> "Control";
-            case 10 -> "Classe";
-            case 11 -> "Defensa";
-            case 12 -> "Street Fighter";
-            case 13 -> "Pan";
-            default -> null;
-        };
-    }
+            paraula.mostrarParaula();
+        }
+
 }
