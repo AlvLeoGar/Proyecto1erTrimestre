@@ -53,9 +53,11 @@ public class Paraula {
 
     }
     public void lletraPista(){
+        boolean pista = false;
         for(int i = 0; i < knowChar.length; i++){
-            if(knowChar[i] != 0){
-                knowChar[i] = 'e';
+            if(knowChar[i] == 0 && !pista){
+                knowChar[i] = partirParaula(paraula)[(int) (Math.random()* paraula.length()-1)];
+                pista = true;
             }
         }
     }
