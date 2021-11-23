@@ -31,16 +31,15 @@ public class Paraula {
         return paraulaPart;
     }
     public void mostrarParaula() {
-        knowChar[0] = 'e';
+        System.out.println("");
         for (int i = 0; i < paraula.length(); i++) {
-            System.out.println("");
             for (int j = 0; j < knowChar.length; j++) {
                 if (knowChar[j] == partirParaula(paraula)[i] || Character.toUpperCase(knowChar[j]) == partirParaula(paraula)[i]) {
                     System.out.print(partirParaula(paraula)[i] + " ");
-                } else {
-                    System.out.print("_ ");
                 }
             }
+            System.out.print("_ ");
         }
+        System.out.println("");
     }
 }
