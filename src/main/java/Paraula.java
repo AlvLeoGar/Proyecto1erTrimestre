@@ -1,12 +1,14 @@
 public class Paraula {
-    private char [] knowChar = new char[25];
 
+    public Paraula(int userTries){
+        this.userTries = userTries;
+    }
     private String paraula = selectParaula();
+    private char [] knowChar = knowChar = new char[paraula.length()];
+    int userTries;
 
     public String selectParaula(){
-        for(int i = 0; i < 24; i++){
-            knowChar[i] = 0;
-        }
+
         int seleccionador = (int) (Math.random() * 14);
         return switch (seleccionador) {
             case 0 -> "Puntuació";
@@ -21,11 +23,12 @@ public class Paraula {
             case 9 -> "Control";
             case 10 -> "Classe";
             case 11 -> "Defensa";
-            case 12 -> "Street Fighter";
+            case 12 -> "StreetFighter";
             case 13 -> "Pan";
             default -> null;
         };
     }
+
     public char [] partirParaula(String paraula){
         char[] paraulaPart = new char[paraula.length()];
         for(int i = 0; i < paraula.length(); i++){
@@ -35,30 +38,37 @@ public class Paraula {
     }
     public void mostrarParaula() {
         System.out.println("");
-
-        for (int i = 0; i < paraula.length(); i++) {
-            for (int j = 0; j < knowChar.length; j++) {
-                if (knowChar[j] == partirParaula(paraula)[i] || Character.toUpperCase(knowChar[j]) == partirParaula(paraula)[i]) {
-                    System.out.print(partirParaula(paraula)[i] + " ");
-                    i++;
-                }
+        if(userTries == 0){
+            for(int i = 0; i < knowChar.length; i++){
+                knowChar[i] = '_';
             }
-            System.out.print("_ ");
+        }
+        for (int i = 0; i < paraula.length(); i++) {
+            System.out.print(knowChar[i] + " ");
         }
         System.out.println("");
     }
-    public void introuirParaula() {
+    public int introuirParaula() {
         System.out.println("Introdueix la paraula");
-        int i = 0;
-
+        userTries++;
+        String respuestaUsuario = Game.teclado.next();
+        if(!respuestaUsuario.equals(paraula)){
+            lletraPista(0);
+            return 1;
+        }
+        else{
+            System.out.println("ggwp");
+            return 0;
+        }
     }
-    public void lletraPista(){
-        boolean pista = false;
-        for(int i = 0; i < knowChar.length; i++){
-            if(knowChar[i] == 0 && !pista){
-                knowChar[i] = partirParaula(paraula)[(int) (Math.random()* paraula.length()-1)];
-                pista = true;
-            }
+
+    public void lletraPista(int seleccionador){
+        seleccionador = (int) (Math.random()* paraula.length()-1);
+        if(knowChar[seleccionador] == '_'){
+            knowChar[seleccionador] = partirParaula(paraula)[seleccionador];
+        }
+        else {
+            lletraPista(seleccionador);
         }
     }
 }

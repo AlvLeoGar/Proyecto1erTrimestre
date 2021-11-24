@@ -1,7 +1,9 @@
 public class Penjat {
     private String name;
     private int tries;
-    private Paraula paraula = new Paraula();
+    private int userTries = 0;
+    private Paraula paraula = new Paraula(userTries);
+    private int resultat = 1;
     public Penjat(String name){
         this.name = name;
     }
@@ -44,18 +46,41 @@ public class Penjat {
             }
         } while (respuetaUsuario > 3);
         do{
-            paraula.mostrarParaula();
-            System.out.println("Tria una opció: ");
-            System.out.print(" [1] Intentar resoldre");
-            System.out.print(" [2] Rendir-se");
-            respuetaUsuario = Game.teclado.nextInt();
-            switch (respuetaUsuario){
-                case 1: paraula.lletraPista(); break;
-                case 2: System.out.println("xD"); break;
-                default: System.out.println("xD"); break;
+            if (respuetaUsuario == 25661){
+                System.out.println("Has perdido xD");
+                respuetaUsuario++;
             }
-            }while(respuetaUsuario != 2);
+            else{
+                paraula.mostrarParaula();
+                System.out.println("Tria una opció: ");
+                System.out.print(" [1] Intentar resoldre");
+                System.out.print(" [2] Rendir-se");
 
-        }
+                if(userTries == tries && resultat != 0) {
+                    respuetaUsuario = 25661;
+                }
+                else{
+                    userTries++;
+                    respuetaUsuario = Game.teclado.nextInt();
+                }
+                switch (respuetaUsuario) {
+                    case 1:
+                        resultat = paraula.introuirParaula();
+                        break;
+                    case 2:
+                        System.out.println("xD");
+                        respuetaUsuario = 25662;
+                        break;
+                    case 25662:
+                        System.out.println("Has perdido xD");
+                        break;
+                    default:
+                        System.out.println("xD");
+                        break;
+                }
+            }
+        }while(respuetaUsuario != 25662 || resultat != 0);
+      respuetaUsuario = 3;
+    }
 
 }
