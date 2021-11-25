@@ -11,7 +11,7 @@ public class Paraula {
         this.dificultat = dificultat;
     }
     public String selectParaula(){ //seleccionador de paraula
-        int seleccionador = 12; //(int) (Math.random() * 14);
+        int seleccionador = 18; //(int) (Math.random() * 14);
         return switch (seleccionador) {
             case 0 -> "Puntuacio";
             case 1 -> "Variable";
@@ -98,39 +98,27 @@ public class Paraula {
         }
     }
     public int lletresRepetides(){
-        int lletres = 0;
-        char [] repetides = new char[paraula.length()];
-        for(int i= 0; i < paraula.length(); i++){
-            repetides[i] = '_';
-        }
-        for(int i = 0; i < paraula.length(); i++){
-            int repeticions = 0;
-
+        int lletres = paraula.length();
+        char [] repetides = partirParaula(paraula);
+        for(int i = 0 ; i < paraula.length(); i++){
+            int repeticiones = 0;
+            char update = paraula.charAt(i);
             boolean control = true;
-            for(int j = 0;j < paraula.length(); j++) {
-                if (partirParaula(paraula)[i] == partirParaula(paraula)[j]) {
-                    repeticions++;
-                    if (repeticions >= 2) {
-                        for (int k = 0; k < paraula.length(); k++) {
-                            for(int repetidor = repetides.length-1; repetidor> 0;repetidor--)
-                            if (repetides[repetidor] != partirParaula(paraula)[i] && control) {
-                                repetides[lletres] = partirParaula(paraula)[i];
-                                lletres++;
-                                control = false;
-                            }
-                            else if(repetides[k] != '_'){
-                                repetidor = 0;
-                                k = partirParaula(paraula).length;
-                            }
-                        }
-                    }
+            for(int j= 0; j < paraula.length(); j++){
+                if(update == repetides[j]){
+                    repeticiones++;
+                    repetides[j] = '_';
+                }
+                if(repeticiones >= 2 && repetides[i] == '_' && control){
+                    lletres--;
+                    control = false;
                 }
             }
         }
         return lletres;
     }
     public int sendPuntuacion(){
-        System.out.println((dificultat-userTries)*(paraula.length()-lletresRepetides())+ lletresRepetides() - lletraMostrada);
-        return (dificultat-userTries) * (paraula.length()-lletresRepetides()) + lletresRepetides() - lletraMostrada;
+        System.out.println((dificultat-userTries) * lletresRepetides() + (paraula.length()-lletresRepetides()) - lletraMostrada);
+        return (dificultat-userTries) * lletresRepetides() + (paraula.length()-lletresRepetides()) - lletraMostrada;
     }
 }
