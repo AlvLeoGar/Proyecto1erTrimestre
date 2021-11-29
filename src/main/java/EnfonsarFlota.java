@@ -1,13 +1,18 @@
 public class EnfonsarFlota {
     private String name;
     private int respuetaUsuario;
+    private int resultados;
     private boolean normes = true;
     private boolean introduirVaixells = false;
+    private boolean control = false;
     public EnfonsarFlota(String name){
         this.name = name;
     }
     public void inici(){
         do {
+            if (control){
+                System.out.println("Has obtingut " + flotaEnd() + " punts");
+            }
             System.out.println("_.*WELCOME TO Enfonsar la Flota*._");
             System.out.println(" [1] Iniciar el joc");
             System.out.println(" [2] Mostrar normes");
@@ -44,7 +49,7 @@ public class EnfonsarFlota {
         }while(respuetaUsuario != 3);
     }
     public void flotaStart(){
-        Tablero tablero = new Tablero();
+        Tablero tablero = new Tablero(name);
         tablero.mostrarTabler();
         if(!introduirVaixells){
             tablero.introduirVaixell();
@@ -53,19 +58,30 @@ public class EnfonsarFlota {
         tablero.introduirVaixellEnemic();
         do {
             tablero.mostrarTabler();
-            System.out.println("Que vols fer?");
-            System.out.println("[1] Disparar  [2] Eixir");
-            respuetaUsuario = Game.teclado.nextInt();
-            switch (respuetaUsuario) {
-                case 1:
-                    tablero.disparar();
-                    break;
-                case 2:
-                    System.out.println("Hola");
-                    break;
-                default:
-                    System.out.println("xD OMGLUL");
+            if (tablero.comprobarFin()) {
+                respuetaUsuario = 2;
+            } else {
+                System.out.println("Que vols fer?");
+                System.out.println("[1] Disparar  [2] Eixir");
+                respuetaUsuario = Game.teclado.nextInt();
+                switch (respuetaUsuario) {
+                    case 1:
+                        tablero.disparar();
+                        break;
+                    case 2:
+                        System.out.println("Partida finalitzada");
+                        resultados = tablero.finalitzar();
+                        break;
+                    default:
+                        System.out.println("Elegix una de les opcions mostrades");
+                }
             }
-        }while(respuetaUsuario != 2);
+        }while (respuetaUsuario != 2);
+    }
+    public int flotaEnd(){
+        return resultados;
+    }
+    public String flotaName(){
+        return name;
     }
 }

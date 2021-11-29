@@ -1,12 +1,15 @@
 public class Tablero {
+    public Tablero(String name){this.name = name;}
     private String tipusVaixell;
     private String[][] tableroAliado = new String[12][12];
     private String[][] tableroEnemigo = new String[12][12];
     private String[][] tableroOculto = new String[12][12];
+    private String name;
     private int respuestaUsuario;
     private int filera;
     private int columna;
     private int punts = 0;
+    private int contadorAliado= 0, contadorEnemigo = 0, contadorFallo = 0;
     private boolean ocupado = true;
     private boolean isOcupado = true;
     private boolean generarTabler = false;
@@ -17,6 +20,7 @@ public class Tablero {
             crearTabler();
             generarTabler = true;
         }
+        System.out.println(name + "           PC");
         for (int i = 0; i < 12; i++) {
             System.out.println("");
             for (int j = 0; j < 12; j++) {
@@ -24,7 +28,7 @@ public class Tablero {
             }
             System.out.print("   ");
             for (int j = 0; j < 12; j++) {
-                System.out.print(tableroEnemigo[i][j]);
+                System.out.print(tableroOculto[i][j]);
             }
         }
         System.out.println("");
@@ -63,9 +67,9 @@ public class Tablero {
             do {
                 System.out.println("Vaixell: " + tipusVaixell + " " + (i + 1));
                 System.out.println("En quina columna el vols posar");
-                columna = Game.teclado.nextInt() - 1;
+                columna = Game.teclado.nextInt();
                 System.out.println("En quina filera el vols posar");
-                filera = Game.teclado.nextInt() - 1;
+                filera = Game.teclado.nextInt();
                 if(filera < 0 || filera >= 12 || columna < 0 || columna >=12){
                     System.out.println("Posición no valida");
                     if(i != 0){
@@ -184,7 +188,8 @@ public class Tablero {
                         break;
                     case 4:
                         for (int j = 0; j < 2; j++) {
-                            if (!tableroAliado[filera][columna + j].equals(" ") && isOcupado) {                                System.out.println("Esta posició està ocupada");
+                            if (!tableroAliado[filera][columna + j].equals(" ") && isOcupado) {
+                                System.out.println("Esta posició està ocupada");
                                 if (i != 0) {
                                     i--;
                                 }
@@ -939,11 +944,21 @@ public class Tablero {
     }
 
     public void disparar(){
-        System.out.println("Dime en quina columna vols disparar");
-        columna = Game.teclado.nextInt();
-        System.out.println("Dime en quina fila vols disparar");
-        filera = Game.teclado.nextInt();
-        if(!tableroEnemigo[filera][columna].equals(" ")){
+        ocupado = true;
+        do {
+            System.out.println("Dime en quina columna vols disparar");
+            columna = Game.teclado.nextInt();
+            System.out.println("Dime en quina fila vols disparar");
+            filera = Game.teclado.nextInt();
+            if(columna < 0 || columna >= 12 || filera < 0 || filera >=12){
+                ocupado = true;
+                System.out.println("Posició no valida");
+            }
+            else{
+                ocupado = false;
+            }
+        }while(ocupado);
+        if(!tableroEnemigo[filera][columna].equals(" ") && !tableroOculto[filera][columna].equals("!")){
             tableroOculto[filera][columna] = "!";
             System.out.println("HAS GOLPEJAT AL OBJECTIU!!!!! (+1 punt)");
             punts++;
@@ -953,8 +968,8 @@ public class Tablero {
             System.out.println("No has acertat...");
         }
         do {
-            columna = (int) (Math.random() * 12);
-            filera = (int) (Math.random() * 12);
+            columna = (int) (Math.random() * 10)+ 1;
+            filera = (int) (Math.random() * 10)+ 1;
             if (tableroAliado[filera][columna].equals("X") || tableroAliado[filera][columna].equals("?")) {
                 control = true;
             } else if(!tableroAliado[filera][columna].equals(" ")){
@@ -968,13 +983,42 @@ public class Tablero {
         }while(control);
     }
 
-    public void comprobarFinal(){
-        for(int i = 1; i < 11; i++){
-            for (int j = 1; j < 11; j++){
-                if(!tableroAliado[i][j].equals(" ") && !tableroAliado[i][j].equals("X")) {
-                    punts++;
+    public boolean comprobarFin(){
+        for(int i = 1; i < 11; i++) {
+            for (int j = 1; j < 11; j++) {
+                if (tableroAliado[i][j].equals("X")) {
+                    contadorEnemigo++;
+                }
+                if (tableroOculto[i][j].equals("!")) {
+                    contadorAliado++;
                 }
             }
         }
+        if(contadorAliado == 24 || contadorEnemigo == 24){
+            return true;
+        }
+        else{
+            contadorEnemigo = 0; contadorAliado = 0;
+            return false;
+        }
+    }
+    public int finalitzar(){
+        contadorEnemigo = 0; contadorAliado = 0;
+        for(int i = 1; i < 11; i++){
+            for (int j = 1; j < 11; j++){
+                if(tableroAliado[i][j].equals("X")) {
+                    contadorEnemigo++;
+                }
+                if(tableroOculto[i][j].equals("!")){
+                    contadorAliado++;
+                }
+                if(tableroOculto[i][j].equals("?")){
+                    contadorFallo++;
+                }
+            }
+        }
+        punts += (24-contadorEnemigo);
+        punts -= contadorFallo;
+        return punts;
     }
 }

@@ -108,4 +108,5 @@ public class Penjat {
     public int sendLastResult(){
         return puntuacio;
     }
+    public String lastPlayer(){return name;}
 }
