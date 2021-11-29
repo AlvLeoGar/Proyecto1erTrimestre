@@ -4,14 +4,14 @@ public class Paraula {
     private String paraula = selectParaula();
     private char [] knowChar  = new char[paraula.length()];
     int userTries;
-    private char [] resultado = new char[paraula.length()];
+    char [] resultado;
     private boolean pistaDada;
     public Paraula(int userTries, int dificultat){ //constructor
         this.userTries = userTries;
         this.dificultat = dificultat;
     }
     public String selectParaula(){ //seleccionador de paraula
-        int seleccionador = 18; //(int) (Math.random() * 14);
+        int seleccionador = (int) (Math.random() * 51);
         return switch (seleccionador) {
             case 0 -> "Puntuacio";
             case 1 -> "Variable";
@@ -21,18 +21,50 @@ public class Paraula {
             case 5 -> "Porter";
             case 6 -> "Mundo";
             case 7 -> "HolaMundo";
-            case 8 -> "Delanter";
+            case 8 -> "Devanter";
             case 9 -> "Control";
             case 10 -> "Classe";
             case 11 -> "Defensa";
             case 12 -> "StreetFighter";
-            case 13 -> "Pan";
+            case 13 -> "Zelda";
             case 14 -> "Arcade";
             case 15 -> "Boss";
             case 16 -> "Experiencia";
             case 17 -> "Computadora";
             case 18 -> "Videoconsola";
-            default -> null;
+            case 19 -> "Checkpoint";
+            case 20 -> "DVD";
+            case 21 -> "Beta";
+            case 22 -> "Targeta grafica";
+            case 23 -> "Actualizacio";
+            case 24 -> "Software";
+            case 25 -> "Hardware";
+            case 26 -> "Alfa";
+            case 27 -> "Online";
+            case 28 -> "Retro";
+            case 29 -> "RPG";
+            case 30 -> "Descarga";
+            case 31 -> "Fornite";
+            case 32 -> "MarioBros";
+            case 33 -> "Procesador";
+            case 34 -> "Pixel";
+            case 35 -> "Pendrive";
+            case 36 -> "Codi";
+            case 37 -> "Arxiu";
+            case 38 -> "Virus";
+            case 39 -> "Web";
+            case 40 -> "Simulador";
+            case 41 -> "Emulador";
+            case 42 -> "Servidor";
+            case 43 -> "Sonic";
+            case 44 -> "Pokemon";
+            case 45 -> "CallOfDuty";
+            case 46 -> "GTA";
+            case 47 -> "Fifa";
+            case 48 -> "Corner";
+            case 49 -> "Penalti";
+            case 50 -> "Porteria";
+            default -> "Pan";
         };
     }
 
@@ -59,30 +91,37 @@ public class Paraula {
         System.out.println("Introdueix la paraula");
         pistaDada = false;
         String respuestaUsuario = Game.teclado.next();
+        resultado = new char[respuestaUsuario.length()];
         for(int i = 0; i < respuestaUsuario.length(); i++){
            resultado[i] = respuestaUsuario.charAt(i);
         }
-        for (int i = 0; i < paraula.length(); i++) {
-            if ((Character.toUpperCase(resultado[i]) != Character.toUpperCase(partirParaula(paraula)[i]) ||
-                    Character.toLowerCase(resultado[i]) != Character.toLowerCase(partirParaula(paraula)[i])
-                    )&& !pistaDada) {
+        for (int i = 0; i < paraulaLlarga(); i++) {
+            if (Character.toUpperCase(resultado[i]) != Character.toUpperCase(partirParaula(paraula)[i]) && !pistaDada) {
                 lletraPista();
                 userTries++;
             } else if(respuestaUsuario.equalsIgnoreCase(paraula)){
                 System.out.println("ggwp");
-                sendPuntuacion();
                 return 0;
             }
         }
         return 1;
     }
 
+    public int paraulaLlarga(){ //evitar ArrayOutOfIndex quan es comproba la paraula
+        if(paraula.length() <= resultado.length){
+            return paraula.length();
+        }
+        else{
+            return resultado.length;
+        }
+    }
+
     public void lletraPista() { //per a posar una lletra pista a l'hora de jugar
         int seleccionador = (int) (Math.random() * paraula.length());
-        if (knowChar[seleccionador] == '_') {
+        if (knowChar[seleccionador] == '_' && !pistaDada) {
             knowChar[seleccionador] = partirParaula(paraula)[seleccionador];
             for (int i = 0; i < paraula.length(); i++) {
-                if (partirParaula(paraula)[i] == knowChar[seleccionador]){
+                if (Character.toUpperCase(partirParaula(paraula)[i]) == Character.toUpperCase(knowChar[seleccionador])){
                     knowChar[i] = partirParaula(paraula)[seleccionador];
                     lletraMostrada++;
                 }
@@ -97,7 +136,7 @@ public class Paraula {
             }
         }
     }
-    public int lletresRepetides(){
+    public int lletresRepetides(){ //per a calcular les lletres repetides
         int lletres = paraula.length();
         char [] repetides = partirParaula(paraula);
         for(int i = 0 ; i < paraula.length(); i++){
@@ -117,8 +156,12 @@ public class Paraula {
         }
         return lletres;
     }
-    public int sendPuntuacion(){
-        System.out.println((dificultat-userTries) * lletresRepetides() + (paraula.length()-lletresRepetides()) - lletraMostrada);
+    public int sendPuntuacion(){ //enviar la puntuació
+        System.out.println("has obtingut: ");
+        System.out.print((dificultat-userTries) * lletresRepetides() + (paraula.length()-lletresRepetides()) - lletraMostrada);
+        System.out.print(" punts");
+        System.out.println("");
         return (dificultat-userTries) * lletresRepetides() + (paraula.length()-lletresRepetides()) - lletraMostrada;
     }
 }
+

@@ -2,7 +2,7 @@ public class Penjat {
     private String name;
     private int tries;
     private int userTries;
-
+    private int puntuacio;
     private int resultat = 1;
     private boolean normes = true;
     public Penjat(String name){
@@ -34,14 +34,14 @@ public class Penjat {
                         System.out.println("[1] Fàcil ---> Tens 9 intents per acertar la paraula");
                         System.out.println("[2] Normal ---> Tens 6 intents per acertar la paraula");
                         System.out.println("[3] Difícil ---> Tens 3 intents per acertar la paraula");
-                        System.out.println("Les tematiques de les paraules son: Videojocs, informatica i futbol");
+                        System.out.println("Les tematiques de les paraules son: videojocs, informatica i futbol (les paraules NO portaràn accent)");
                         normes = false;
                     }
                     break;
                 case 3:
                     System.out.println("Tornant al menú");
                     break;
-                default: System.out.println("JAJA OMGL");
+                default: System.out.println("Entrada incorrecta, selecciona un nombre del 1 al 3");
             }
         }while(respuetaUsuario != 3);
     }
@@ -65,7 +65,7 @@ public class Penjat {
         Paraula paraula = new Paraula(userTries, tries);
         do{
             if (respuetaUsuario == 25661){
-                System.out.println("Has perdido xD");
+                System.out.println("Has perdut");
                 respuetaUsuario++;
             }
             else{
@@ -85,6 +85,7 @@ public class Penjat {
                         resultat = paraula.introuirParaula();
                         userTries++;
                         if(resultat == 0){
+                            puntuacio = paraula.sendPuntuacion();
                             respuetaUsuario = 25662;
                         }
                         break;
@@ -93,10 +94,10 @@ public class Penjat {
                         respuetaUsuario = 25662;
                         break;
                     case 25662:
-                        System.out.println("Has perdido xD");
+                        System.out.println("Has perdut");
                         break;
                     default:
-                        System.out.println("xD");
+                        System.out.println("Elegeix una opció que es mostra en pantalla");
                         break;
                 }
             }
@@ -104,4 +105,7 @@ public class Penjat {
       respuetaUsuario = 0;
     }
 
+    public int sendLastResult(){
+        return puntuacio;
+    }
 }

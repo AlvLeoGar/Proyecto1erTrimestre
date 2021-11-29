@@ -1,10 +1,10 @@
 import java.util.Scanner;
 
 public class Game {
-
     static Scanner teclado = new Scanner(System.in);
     private static String name = "Jugador";
     public static void main(String[] args){
+        int puntuacioPenjat = 0;
         int respuestaUsuario;
         do {
             System.out.println("Tria una opció:");
@@ -21,12 +21,20 @@ public class Game {
                 case 2:
                     Penjat penjat = new Penjat(name);
                     penjat.inici();
+                    puntuacioPenjat = penjat.sendLastResult();
+                    break;
+                case 3:
+                    EnfonsarFlota enfonsarFlota = new EnfonsarFlota(name);
+                    enfonsarFlota.inici();
+                    break;
+                case 4:
+                    System.out.println("La ultima puntuació del penjat: " + puntuacioPenjat);
                     break;
                 case 5:
                     System.out.println("Bye");
                     break;
                 default:
-                    System.out.println("xD");
+                    System.out.println("opció no correcta");
                     break;
             }
         }while (respuestaUsuario != 5);
