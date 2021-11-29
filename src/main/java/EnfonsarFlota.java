@@ -46,11 +46,26 @@ public class EnfonsarFlota {
     public void flotaStart(){
         Tablero tablero = new Tablero();
         tablero.mostrarTabler();
-        /*if(!introduirVaixells){
+        if(!introduirVaixells){
             tablero.introduirVaixell();
             introduirVaixells = true;
-        }*/
+        }
         tablero.introduirVaixellEnemic();
-        tablero.mostrarTabler();
+        do {
+            tablero.mostrarTabler();
+            System.out.println("Que vols fer?");
+            System.out.println("[1] Disparar  [2] Eixir");
+            respuetaUsuario = Game.teclado.nextInt();
+            switch (respuetaUsuario) {
+                case 1:
+                    tablero.disparar();
+                    break;
+                case 2:
+                    System.out.println("Hola");
+                    break;
+                default:
+                    System.out.println("xD OMGLUL");
+            }
+        }while(respuetaUsuario != 2);
     }
 }
